@@ -1,4 +1,4 @@
-package Games;
+package Mini_Games;
 
 import java.util.Scanner;
 
