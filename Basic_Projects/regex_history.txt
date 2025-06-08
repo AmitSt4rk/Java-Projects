@@ -1,0 +1,6 @@
+Pattern: \d+
+Text: A group of 5 coders scored 444/500 in hacathon.
+----------------
+Pattern: [aeiou]
+Text: Hello World
+----------------
