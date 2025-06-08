@@ -4,3 +4,9 @@ Text: A group of 5 coders scored 444/500 in hacathon.
 Pattern: [aeiou]
 Text: Hello World
 ----------------
+Pattern: [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+Text: My Email is amit3000@gmail.com and backup Email is tony143@gmail.com
+----------------
+Pattern: [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+Text: My Email is amit3000@gmail.com and backup Email is tony143@gmail.com
+----------------
