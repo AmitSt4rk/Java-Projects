@@ -1,5 +1,3 @@
-package Basic_Projects;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,37 +9,49 @@ public class RegexTesterTool {
 
     private static final String FILE_HISTORY = "regex_history.txt";
 
-    private static void testRegex(String Inputpattern, String Inputtext) {
+    private static String testRegex(String Inputpattern, String Inputtext) {
 
+        String str = "";
         try {
 
             Pattern pattern = Pattern.compile(Inputpattern);
             Matcher matcher = pattern.matcher(Inputtext);
 
             boolean found = false;
-            System.out.println("\n----Matches Found----");
             while (matcher.find()) {
-                System.out.println("Matched: \"" + matcher.group() + "\" from index: " + matcher.start() + " to "
-                        + (matcher.end() - 1));
+                str += ("Matched: \"" + matcher.group() + "\" from index: " + matcher.start() + " to "
+                        + (matcher.end() - 1))+"\n";
                 found = true;
             }
 
             if (!found) {
-                System.out.println("No Match found.");
+                str = ("No Match found.");
             }
 
         } catch (PatternSyntaxException e) {
-            System.out.println("Invalid Regex Pattern! Error: " + e.getDescription());
+            str = ("Invalid Regex Pattern! Error: " + e.getDescription());
         }
+
+        return str;
     }
 
-    private static void saveToHistory(String pattern, String text){
+    private static void saveToHistory(String pattern, String text, String result){
         try (FileWriter writer = new FileWriter(FILE_HISTORY, true)) {
             writer.write("Pattern: "+pattern+"\n");
             writer.write("Text: "+text+"\n");
+            writer.write("Result: "+result+"\n");
             writer.write("----------------\n");
         } catch (IOException e) {
             System.out.println("Error! saving History: "+ e.getMessage());
+        }
+    }
+
+    private static void clearHistory(){
+        try (FileWriter writer = new FileWriter(FILE_HISTORY, false)){
+            writer.write("");
+            System.out.println("History Cleared Successfully!");
+        } catch (IOException e) {
+            System.out.println("Error: clearing History: "+e.getMessage());
         }
     }
 
@@ -51,20 +61,26 @@ public class RegexTesterTool {
         System.out.println("\n========REGEX Tester Tool========");
 
         while (true) {
-            System.out.print("\nEnter Regex Pattern (or type 'exit' to quit.): ");
+            System.out.print("\n(type 'clear' to delete history! and type 'exit' to quit.)\nEnter Regex Pattern: ");
             String patternInput = sc.nextLine();
 
             if (patternInput.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting... Thank you!");
                 sc.close();
                 return;
+            }else if(patternInput.equalsIgnoreCase("clear")){
+                System.out.println("Clearing... History!");
+                clearHistory();
+                continue;
             }
 
             System.out.print("Enter text to test against: ");
             String textInput = sc.nextLine();
 
-            testRegex(patternInput, textInput);
-            saveToHistory(patternInput, textInput);
+            String result = testRegex(patternInput, textInput);
+            System.out.println("\n----Matches Found----");
+            System.out.println(result);
+            saveToHistory(patternInput, textInput, result);
         }
     }
 }

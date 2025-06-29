@@ -1,5 +1,3 @@
-package Basic_Projects;
-
 import java.util.Scanner;
 
 public class Simple_ToDoList {
